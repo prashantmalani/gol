@@ -14,7 +14,7 @@ test: $(TEST_EXEC)
 	./$(TEST_EXEC)
 
 $(TEST_EXEC): $(TEST_SRC)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -g -o $@ $^
 
 clean:
 	rm -f $(EXEC) $(TEST_EXEC)

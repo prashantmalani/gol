@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "gol.h"
 
@@ -127,6 +128,30 @@ struct calcStateTestCase cases[] = {
     },
 };
 
+const int extendArrayTest[][COLS] = {
+    {1,1,1,0,1,0,1,0},
+    {0,1,1,0,1,1,0,0},
+    {0,1,1,0,1,1,1,1},
+    {0,1,1,0,1,1,0,0},
+    {1,1,1,0,1,0,1,1},
+    {0,1,1,0,1,1,1,0},
+    {0,0,1,0,1,0,1,0},
+    {0,1,1,0,1,1,1,1},
+};
+
+const int extendArrayResult[][COLS+2] = {
+    {1,0,1,1,0,1,1,1,1,0},
+    {0,1,1,1,0,1,0,1,0,1},
+    {0,0,1,1,0,1,1,0,0,0},
+    {1,0,1,1,0,1,1,1,1,0},
+    {0,0,1,1,0,1,1,0,0,0},
+    {1,1,1,1,0,1,0,1,1,1},
+    {0,0,1,1,0,1,1,1,0,0},
+    {0,0,0,1,0,1,0,1,0,0},
+    {1,0,1,1,0,1,1,1,1,0},
+    {0,1,1,1,0,1,0,1,0,1},
+};
+
 // Series of tests that verifies that calcState works correctly.
 void testCalcState() {
     printf("Running calcState test cases.\n");
@@ -136,6 +161,35 @@ void testCalcState() {
     }
 }
 
+// Tests that the code used to expand the array works correctly.
+void testExtendArray() {
+    printf("Running extendArray test case.\n");
+    int **arr = malloc(sizeof(int *) * (ROWS+2));
+    if (!arr) {
+        perror("Failed to allocate memory.\n");
+        return;
+    }
+
+    for (int i = 0; i < ROWS+2; i++) {
+        arr[i] = malloc(sizeof(int) * (COLS+2));
+        if (!arr[i]) {
+            perror("Failed to allocate memory for a row.\n");
+            return;
+        }
+    }
+
+    extendArray(extendArrayTest, arr);
+
+    for (int i = 0; i < ROWS+2; i++) {
+        for (int j = 0; j < COLS+2; j++) {
+            if (arr[i][j] != extendArrayResult[i][j]) {
+                return;
+            }
+        }
+    }
+}
+
 int main() {
     testCalcState();
+    testExtendArray();
 }
