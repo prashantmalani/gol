@@ -152,6 +152,47 @@ const int extendArrayResult[][COLS+2] = {
     {0,1,1,1,0,1,0,1,0,1},
 };
 
+struct neighboursTestResult {
+    int row;
+    int col;
+    int arr[3][3];
+};
+
+struct neighboursTestResult getNeighboursResults[] = {
+    /* Case 1 */
+    {
+        0,
+        0,
+        {{1,0,1},
+        {0,1,1},
+        {0,0,1}}
+    },
+    /* Case 2 */
+    {
+        7,
+        7,
+        {{1,0,0},
+        {1,1,0},
+        {1,0,1}}
+    },
+    /* Case 3 */
+    {
+        7,
+        0,
+        {{0,0,0},
+        {1,0,1},
+        {0,1,1}}
+    },
+    /* Case 4 */
+    {
+        3,
+        3,
+        {{1,0,1},
+        {1,0,1},
+        {1,0,1}}
+    },
+};
+
 // Series of tests that verifies that calcState works correctly.
 void testCalcState() {
     printf("Running calcState test cases.\n");
@@ -174,7 +215,7 @@ void testExtendArray() {
         arr[i] = malloc(sizeof(int) * (COLS+2));
         if (!arr[i]) {
             perror("Failed to allocate memory for a row.\n");
-            return;
+            goto cleanup;
         }
     }
 
@@ -183,13 +224,69 @@ void testExtendArray() {
     for (int i = 0; i < ROWS+2; i++) {
         for (int j = 0; j < COLS+2; j++) {
             if (arr[i][j] != extendArrayResult[i][j]) {
-                return;
+                printf("Mismatch in extended array check");
+                goto cleanup;
             }
         }
     }
+
+cleanup:
+    for (int i = 0; i < ROWS+2; i++) {
+        if (arr[i])
+            free(arr[i]);
+    }
+    free(arr);
+}
+
+/* Helper function to compare two arrays */
+bool checkNeighbours(int **arr, int compare[][3]) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (arr[i][j] != compare[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+
+
+/* Tests that the code used to construct neighbours array works correctly. */
+void testGetNeighbours() {
+    printf("Running getNeighbours test cases.\n");
+
+    int **arr = malloc(sizeof(int *) * 3);
+    if (!arr) {
+        perror("Failed to allocate memory\n");
+        return;
+    }
+
+    for (int i = 0; i < ROWS+2; i++) {
+        arr[i] = malloc(sizeof(int) * 3);
+        if (!arr[i]) {
+            perror("Failed to allocate memory for a row");
+            goto cleanup2;
+        }
+    }
+
+    for (int i = 0; i < (int)(sizeof(getNeighboursResults) / sizeof(getNeighboursResults[0])); i++) {
+        getNeighbours(extendArrayResult, (int **)arr,
+                      getNeighboursResults[i].row,
+                      getNeighboursResults[i].col);
+        if (!checkNeighbours(arr, (int (*)[3])getNeighboursResults[i].arr)) {
+            printf("Neighbours check for Case %d failed\n", i + 1);
+        }
+    }
+
+cleanup2:
+    for (int i = 0; i < 3; i++) {
+        if (arr[i])
+            free(arr[i]);
+    }
+    free(arr);
 }
 
 int main() {
     testCalcState();
     testExtendArray();
+    testGetNeighbours();
 }

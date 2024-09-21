@@ -85,3 +85,28 @@ void extendArray(const int in[][COLS], int **out) {
     out[ROWS+1][0] = in[0][COLS-1];
     out[0][COLS+1] = in[ROWS-1][0];
 }
+
+/* Given the 8x8 array and a particular location, fill out a 3x3 array
+ * centered at the location and its neighbours. This makes it easier to
+ * assess each cell, by taking care of any wrapping issues in this code.
+ *
+ * Args:
+ *  arr = Input (ROW+2) * (COLS+2)  array
+ *  out = Output 3x3 array
+ *  row, col = Row, Column location of the cell **in the original array**.
+ *
+ *  Returns:
+ *   void
+ *
+ * NOTE: |out| expected to be allocated appropriately by the caller.
+ *
+ */
+void getNeighbours(const int arr[][COLS+2], int **out, int row, int col) {
+    row++;
+    col++;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            out[i][j] = arr[row-1+i][col-1+j];
+        }
+    }
+}
