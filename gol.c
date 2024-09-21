@@ -39,7 +39,7 @@ bool calcState(const int arr[3][3]) {
             return false;
     }
 
-    // Dead cell case.
+    /* Dead cell case. */
     return (live_neighbours == 3);
 }
 
@@ -60,26 +60,26 @@ bool calcState(const int arr[3][3]) {
  * NOTE: Caller is assumed to allocate |in| and |out| arrays appropriately.
  */
 void extendArray(const int in[][COLS], int **out) {
-    // Copy the actual array.
+    /* Copy the actual array. */
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
             out[i+1][j+1] = in[i][j];
         }
     }
 
-    // Copy the last row to the beginning of the array, and vice versa
+    /* Copy the last row to the beginning of the array, and vice versa. */
     for (int j = 0; j < COLS; j++) {
         out[0][j+1] = in[ROWS-1][j];
         out[ROWS+1][j+1] = in[0][j];
     }
 
-    // Copy the last column to the first and vice versa.
+    /* Copy the last column to the first and vice versa. */
     for (int i = 0; i < ROWS; i++) {
         out[i+1][0] = in[i][COLS - 1];
         out[i+1][COLS+1] = in[i][0];
     }
 
-    // Copy the diagonal elements over.
+    /* Copy the diagonal elements over. */
     out[0][0] = in[ROWS-1][COLS-1];
     out[ROWS+1][COLS+1] = in[0][0];
     out[ROWS+1][0] = in[0][COLS-1];

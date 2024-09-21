@@ -14,112 +14,111 @@ struct calcStateTestCase {
 };
 
 struct calcStateTestCase cases[] = {
-    // Case 1
+    /* Case 1 */
     {
         {{1,1,1},
          {1,0,1},
          {1,0,1}},
         false,
     },
-    // Case 2
+    /* Case 2 */
     {
         {{1,0,1},
          {1,0,1},
          {1,0,1}},
         false,
     },
-    // Case 3
+    /* Case 3 */
     {
         {{0,0,1},
          {0,0,1},
          {0,0,1}},
         true,
     },
-    // Case 4
+    /* Case 4 */
     {
         {{0,1,1},
          {0,0,1},
          {0,0,0}},
         true,
     },
-    // Case 5
+    /* Case 5 */
     {
         {{1,1,1},
          {0,1,1},
          {0,0,0}},
         false,
     },
-    // Case 6
+    /* Case 6 */
     {
         {{0,1,1},
          {0,1,1},
          {1,0,0}},
         false,
     },
-    // Case 7
-    {
+    /* Case 7 */
         {{0,1,1},
          {0,1,1},
          {1,0,1}},
         false,
     },
-    // Case 8
+    /* Case 8 */
     {
         {{0,1,1},
          {0,1,0},
          {0,0,0}},
         true,
     },
-    // Case 9
+    /* Case 9 */
     {
         {{0,1,0},
          {1,1,0},
          {0,0,0}},
         true,
     },
-    // Case 10
+    /* Case 10 */
     {
         {{0,1,0},
          {1,1,0},
          {0,1,0}},
         true,
     },
-    // Case 11
+    /* Case 11 */
     {
         {{0,0,1},
          {0,1,0},
          {1,0,0}},
         true,
     },
-    // Case 12
+    /* Case 12 */
     {
         {{1,0,1},
          {0,1,0},
          {0,0,0}},
         true,
     },
-    // Case 12
+    /* Case 13 */
     {
         {{1,1,1},
          {0,1,0},
          {0,0,0}},
         true,
     },
-    // Case 13
+    /* Case 14 */
     {
         {{0,0,1},
          {0,1,1},
          {0,0,1}},
         true,
     },
-    // Case 14
+    /* Case 15 */
     {
         {{0,0,0},
          {0,1,0},
          {0,0,1}},
         false,
     },
-    // Case 15
+    /* Case 16 */
     {
         {{0,0,0},
          {0,1,0},
@@ -193,7 +192,7 @@ struct neighboursTestResult getNeighboursResults[] = {
     },
 };
 
-// Series of tests that verifies that calcState works correctly.
+/* Series of tests that verifies that calcState works correctly. */
 void testCalcState() {
     printf("Running calcState test cases.\n");
     for (int i = 0; i < (int)(sizeof(cases) / sizeof(cases[0])); i++) {
@@ -202,7 +201,7 @@ void testCalcState() {
     }
 }
 
-// Tests that the code used to expand the array works correctly.
+/* Tests that the code used to expand the array works correctly. */
 void testExtendArray() {
     printf("Running extendArray test case.\n");
     int **arr = malloc(sizeof(int *) * (ROWS+2));
