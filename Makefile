@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-TEST_SRC = test.c
+TEST_SRC = test.c gol.c
 
 TEST_EXEC = test_program
 
