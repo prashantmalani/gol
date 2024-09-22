@@ -1,4 +1,7 @@
-/* State checking logic */
+/*
+ * State checking logic, along with other utilities of use in the implementation
+ * of the automaton logic.
+ */
 #include "gol.h"
 
 #include <stdio.h>
@@ -44,9 +47,6 @@ bool calcState(const int arr[3][3]) {
 }
 
 /*
- * extendArray
- *
- *
  * In order to avoid dealing with complicated index wrapping cases, we "extend"
  * the array by duplication the last row before the first row (and vice versa),
  * and the last column, before the first colum (and vice version).
@@ -86,20 +86,17 @@ void extendArray(const int in[ROWS][COLS], int out[ROWS+2][COLS+2]) {
     out[0][COLS+1] = in[ROWS-1][0];
 }
 
-/* Given the 8x8 array and a particular location, fill out a 3x3 array
+/*
+ * Given the 8x8 array and a particular location, fill out a 3x3 array
  * centered at the location and its neighbours. This makes it easier to
  * assess each cell, by taking care of any wrapping issues in this code.
  *
  * Args:
- *  arr = Input (ROW+2) * (COLS+2)  array
- *  out = Output 3x3 array
+ *  arr = Input (ROW+2) * (COLS+2) array.
+ *  out = Output 3x3 array.
  *  row, col = Row, Column location of the cell **in the original array**.
  *
- *  Returns:
- *   void
- *
  * NOTE: |out| expected to be allocated appropriately by the caller.
- *
  */
 void getNeighbours(const int arr[ROWS+2][COLS+2], int out[3][3], int row, int col) {
     row++;

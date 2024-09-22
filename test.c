@@ -219,7 +219,7 @@ void testExtendArray() {
     }
 }
 
-/* Helper function to compare two arrays */
+/* Helper function to compare two neighbour arrays */
 bool checkNeighbours(const int arr[][3], const int compare[][3]) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {

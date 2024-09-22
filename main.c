@@ -8,7 +8,7 @@
 
 #define NUM_TICKS 3
 
-enum Pattern{
+enum Pattern {
     BLINKER = 0,
     TOAD,
     BEACON,
@@ -84,6 +84,7 @@ int loadState(int arr[][COLS], int pattern) {
     return 0;
 }
 
+/* Print out the provided array */
 void printState(const int arr[][COLS]) {
     printf("\n");
     for (int i = 0; i < ROWS; i++) {
@@ -102,6 +103,7 @@ void doTick(int arr[][COLS]) {
 
     extendArray(arr, extend);
 
+    /* Calculate the next state for each cell. */
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
             getNeighbours(extend, ngbr, i, j);
