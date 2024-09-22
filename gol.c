@@ -59,7 +59,7 @@ bool calcState(const int arr[3][3]) {
  *
  * NOTE: Caller is assumed to allocate |in| and |out| arrays appropriately.
  */
-void extendArray(const int in[][COLS], int out[][COLS+2]) {
+void extendArray(const int in[ROWS][COLS], int out[ROWS+2][COLS+2]) {
     /* Copy the actual array. */
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
@@ -101,7 +101,7 @@ void extendArray(const int in[][COLS], int out[][COLS+2]) {
  * NOTE: |out| expected to be allocated appropriately by the caller.
  *
  */
-void getNeighbours(const int arr[][COLS+2], int out[][3], int row, int col) {
+void getNeighbours(const int arr[ROWS+2][COLS+2], int out[3][3], int row, int col) {
     row++;
     col++;
     for (int i = 0; i < 3; i++) {
