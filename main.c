@@ -11,6 +11,7 @@
 enum Pattern{
     BLINKER = 0,
     TOAD,
+    BEACON,
 };
 
 const int blinker_arr[][COLS] = {
@@ -35,6 +36,17 @@ const int toad_arr[][COLS] = {
     {0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+const int beacon_arr[][COLS] = {
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 1, 1, 0},
+    {0, 0, 0, 0, 0, 1, 1, 0},
+    {0, 0, 0, 1, 1, 0, 0, 0},
+    {0, 0, 0, 1, 1, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0}
+};
+
 int loadState(int arr[][COLS], int pattern) {
     /* Load the state. */
     const int (*target)[COLS];
@@ -42,6 +54,8 @@ int loadState(int arr[][COLS], int pattern) {
         target = blinker_arr;
     } else if (pattern == TOAD) {
         target = toad_arr;
+    } else if (pattern == BEACON) {
+        target = beacon_arr;
     } else {
         printf(__func__, "%s(): Invalid pattern %d", pattern);
         return -1;
@@ -115,6 +129,9 @@ int main(int argc, char *argv[]) {
     } else if (!strcmp(argv[1], "toad")) {
         pattern = TOAD;
         printf("Toad\n");
+    } else if (!strcmp(argv[1], "beacon")) {
+        pattern = BEACON;
+        printf("Beacon\n");
     } else {
         printf("Unknown pattern: %s\n", argv[1]);
         return 1;
