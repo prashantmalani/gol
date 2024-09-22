@@ -101,7 +101,7 @@ void extendArray(const int in[][COLS], int out[][COLS+2]) {
  * NOTE: |out| expected to be allocated appropriately by the caller.
  *
  */
-void getNeighbours(const int arr[][COLS+2], int **out, int row, int col) {
+void getNeighbours(const int arr[][COLS+2], int out[][3], int row, int col) {
     row++;
     col++;
     for (int i = 0; i < 3; i++) {

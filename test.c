@@ -220,7 +220,7 @@ void testExtendArray() {
 }
 
 /* Helper function to compare two arrays */
-bool checkNeighbours(int **arr, int compare[][3]) {
+bool checkNeighbours(const int arr[][3], const int compare[][3]) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (arr[i][j] != compare[i][j])
@@ -235,35 +235,15 @@ bool checkNeighbours(int **arr, int compare[][3]) {
 void testGetNeighbours() {
     printf("Running getNeighbours test cases.\n");
 
-    int **arr = malloc(sizeof(int *) * 3);
-    if (!arr) {
-        perror("Failed to allocate memory\n");
-        return;
-    }
-
-    for (int i = 0; i < ROWS+2; i++) {
-        arr[i] = malloc(sizeof(int) * 3);
-        if (!arr[i]) {
-            perror("Failed to allocate memory for a row");
-            goto cleanup2;
-        }
-    }
-
+    int arr[3][3] = {0};
     for (int i = 0; i < (int)(sizeof(getNeighboursResults) / sizeof(getNeighboursResults[0])); i++) {
-        getNeighbours(extendArrayResult, (int **)arr,
+        getNeighbours(extendArrayResult, arr,
                       getNeighboursResults[i].row,
                       getNeighboursResults[i].col);
-        if (!checkNeighbours(arr, (int (*)[3])getNeighboursResults[i].arr)) {
+        if (!checkNeighbours(arr, getNeighboursResults[i].arr)) {
             printf("Neighbours check for Case %d failed\n", i + 1);
         }
     }
-
-cleanup2:
-    for (int i = 0; i < 3; i++) {
-        if (arr[i])
-            free(arr[i]);
-    }
-    free(arr);
 }
 
 int main() {
