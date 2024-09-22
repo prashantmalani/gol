@@ -57,6 +57,7 @@ struct calcStateTestCase cases[] = {
         false,
     },
     /* Case 7 */
+    {
         {{0,1,1},
          {0,1,1},
          {1,0,1}},
