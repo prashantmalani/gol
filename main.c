@@ -1,9 +1,12 @@
 /* Game Of Life primary executable */
 
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "gol.h"
+
+#define NUM_TICKS 3
 
 enum Pattern{
     BLINKER = 0,
@@ -21,7 +24,7 @@ const int blinker_arr[][COLS] = {
 };
 
 int loadState(int arr[][COLS], int pattern) {
-    // Load the state.
+    /* Load the state. */
     const int (*target)[COLS];
     if (pattern == 0) {
         target = blinker_arr;
@@ -49,11 +52,40 @@ void printState(const int arr[][COLS]) {
     }
 }
 
+/* Calculate the next state, given current state in |arr|. */
+void doTick(int arr[][COLS]) {
+    int extend[ROWS+2][COLS+2] = {0};
+    int ngbr[3][3] = {0};
+    int newstate[ROWS][COLS] = {0};
+
+    extendArray(arr, extend);
+
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            getNeighbours(extend, ngbr, i, j);
+            bool live = calcState(ngbr);
+            newstate[i][j] = live ? 1 : 0;
+        }
+    }
+
+    /* Copy new state into arr */
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            arr[i][j] = newstate[i][j];
+        }
+    }
+
+    printState(arr);
+}
+
 void doGol(int pattern) {
     int state[ROWS][COLS] = {0};
     loadState(state, pattern);
 
     printState(state);
+    for (int i = 0; i < NUM_TICKS; i++) {
+        doTick(state);
+    }
 }
 
 int main(int argc, char *argv[]) {
