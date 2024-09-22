@@ -10,6 +10,7 @@
 
 enum Pattern{
     BLINKER = 0,
+    TOAD,
 };
 
 const int blinker_arr[][COLS] = {
@@ -23,11 +24,24 @@ const int blinker_arr[][COLS] = {
     {0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+const int toad_arr[][COLS] = {
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 1, 1, 1, 0, 0},
+    {0, 0, 1, 1, 1, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0}
+};
+
 int loadState(int arr[][COLS], int pattern) {
     /* Load the state. */
     const int (*target)[COLS];
-    if (pattern == 0) {
+    if (pattern == BLINKER) {
         target = blinker_arr;
+    } else if (pattern == TOAD) {
+        target = toad_arr;
     } else {
         printf(__func__, "%s(): Invalid pattern %d", pattern);
         return -1;
@@ -98,6 +112,9 @@ int main(int argc, char *argv[]) {
     if (!strcmp(argv[1], "blinker")) {
         pattern = BLINKER;
         printf("Blinker\n");
+    } else if (!strcmp(argv[1], "toad")) {
+        pattern = TOAD;
+        printf("Toad\n");
     } else {
         printf("Unknown pattern: %s\n", argv[1]);
         return 1;
