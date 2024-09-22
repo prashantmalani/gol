@@ -12,6 +12,7 @@ enum Pattern{
     BLINKER = 0,
     TOAD,
     BEACON,
+    RANDOM,
 };
 
 const int blinker_arr[][COLS] = {
@@ -47,6 +48,17 @@ const int beacon_arr[][COLS] = {
     {0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+const int random_arr[][COLS] = {
+    {0, 0, 0, 1, 1, 0, 1, 1},
+    {0, 0, 0, 1, 1, 1, 1, 0},
+    {0, 1, 1, 1, 1, 0, 1, 0},
+    {0, 1, 1, 0, 0, 0, 1, 1},
+    {0, 0, 1, 0, 1, 1, 1, 1},
+    {1, 1, 1, 0, 1, 1, 1, 1},
+    {1, 1, 1, 1, 0, 1, 1, 0},
+    {1, 0, 1, 0, 0, 0, 0, 1}
+};
+
 int loadState(int arr[][COLS], int pattern) {
     /* Load the state. */
     const int (*target)[COLS];
@@ -56,6 +68,8 @@ int loadState(int arr[][COLS], int pattern) {
         target = toad_arr;
     } else if (pattern == BEACON) {
         target = beacon_arr;
+    } else if (pattern == RANDOM) {
+        target = random_arr;
     } else {
         printf(__func__, "%s(): Invalid pattern %d", pattern);
         return -1;
@@ -117,13 +131,16 @@ void doGol(int pattern) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
+    if (argc > 2) {
         printf("Usage ./gol <pattern>\n");
         return 1;
     }
 
     int pattern;
-    if (!strcmp(argv[1], "blinker")) {
+    if (argc == 1 || !strcmp(argv[1], "random")) {
+        pattern = RANDOM;
+        printf("Random\n");
+    } else if (!strcmp(argv[1], "blinker")) {
         pattern = BLINKER;
         printf("Blinker\n");
     } else if (!strcmp(argv[1], "toad")) {
