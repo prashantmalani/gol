@@ -49,7 +49,7 @@ bool calcState(const int arr[3][3]) {
 /*
  * In order to avoid dealing with complicated index wrapping cases, we "extend"
  * the array by duplication the last row before the first row (and vice versa),
- * and the last column, before the first colum (and vice version).
+ * and the last column, before the first colum (and vice versa).
  * We also copy diagonal elements to the opposite diagonal location.
  * That way, creating a 3x3 matrix of neighbours becomes vastly simplified.
  *
