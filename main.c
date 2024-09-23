@@ -124,7 +124,8 @@ void doTick(int arr[][COLS]) {
 
 void doGol(int pattern) {
     int state[ROWS][COLS] = {0};
-    loadState(state, pattern);
+    if (loadState(state, pattern))
+        return;
 
     printState(state);
     for (int i = 0; i < NUM_TICKS; i++) {
